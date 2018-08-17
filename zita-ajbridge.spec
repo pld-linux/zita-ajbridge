@@ -9,8 +9,8 @@ Source0:	https://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{name}-%{versi
 URL:		https://kokkinizita.linuxaudio.org/linuxaudio/zita-ajbridge-doc/quickguide.html
 BuildRequires:	alsa-lib-devel
 BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	zita-alsa-pcmi >= 0.2.0
-BuildRequires:	zita-resampler >= 1.3.0
+BuildRequires:	zita-alsa-pcmi-devel >= 0.2.0
+BuildRequires:	zita-resampler-devel >= 1.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
