@@ -1,16 +1,19 @@
 Summary:	ALSA to Jack Bridge
+Summary(pl.UTF-8):	Mostek ALSA do Jacka
 Name:		zita-ajbridge
-Version:	0.7.0
+Version:	0.8.4
 Release:	1
 License:	GPL v3
-Group:		Applications
+Group:		Applications/Sound
 Source0:	https://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{name}-%{version}.tar.bz2
-# Source0-md5:	e2fd197b1535f9dde9159a93e5e3b69c
+# Source0-md5:	d5fe3491445654dbe599d5af8c63e5e9
 URL:		https://kokkinizita.linuxaudio.org/linuxaudio/zita-ajbridge-doc/quickguide.html
 BuildRequires:	alsa-lib-devel
 BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	zita-alsa-pcmi-devel >= 0.2.0
-BuildRequires:	zita-resampler-devel >= 1.3.0
+BuildRequires:	zita-alsa-pcmi-devel >= 0.3.0
+BuildRequires:	zita-resampler-devel >= 1.6.0
+Requires:	zita-alsa-pcmi >= 0.3.0
+Requires:	zita-resampler >= 1.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -20,23 +23,27 @@ capture (a2j) or playback (j2a) channels. Functionally these are
 equivalent to the alsa_in and alsa_out clients that come with Jack,
 but they provide much better audio quality.
 
+%description -l pl.UTF-8
+Zita-ajbridge dostarcza dwie aplikacje: zita-a2j i zita-j2a. Pozwalają
+na używanie urządzenia ALSA jako klienta Jacka, aby zapewnić dodatkowe
+kanały do przechwytywania (a2j) lub odtwarzania (j2a) dźwięku.
+Funkcjonalnie jest to odpowiednik klientów alsa_in i alsa_out
+dostarczanych z Jackiem, ale zapewniają dużo lepszą jakość dźwięku.
+
 %prep
 %setup -q
 
 %build
-cd source
-%{__make} \
-	CFLAGS="%{rpmcflags}" \
+%{__make} -C source \
+	CXX="%{__cxx}" \
 	CXXFLAGS="%{rpmcxxflags}" \
 	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
-cd source
-%{__make} install \
+%{__make} -C source install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}/man1 \
 	BINDIR=%{_bindir}
